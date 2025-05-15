@@ -76,10 +76,14 @@ class ProductResource extends Resource
                         TextInput::make('price')
                             ->required()
                             ->numeric()
-                            ->prefix('XFA'),
+                            ->default(0)
+                            ->prefix('XFA')
+                            ->readOnly(),
                         TextInput::make('quantity')
                             ->required()
-                            ->numeric(),
+                            ->default(0)
+                            ->numeric()
+                            ->readOnly(),
                     ])
                     ->columns(2)
                     ->collapsible(),

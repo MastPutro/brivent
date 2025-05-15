@@ -62,6 +62,7 @@ class ProductSupplierResource extends Resource
                             ->native(false)
                             ->preload()
                             ->columnSpanFull()
+                            ->searchable()
                             ->required()
                     ])
                     ->columns(3),

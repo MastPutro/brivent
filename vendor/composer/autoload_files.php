@@ -35,6 +35,7 @@ return array(
     '9720327d09ed9a4ba00c9b5071b71c7d' => $vendorDir . '/danharrin/date-format-converter/src/standards.php',
     '2ad94ea6f6f6013119e9abcf4e302a08' => $vendorDir . '/filament/forms/src/helpers.php',
     'b69d5f1f95cd1ed438c038b6cbcc45b5' => $vendorDir . '/filament/notifications/src/Testing/Autoload.php',
+    '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     '89e9938b64b06cc502d7ceca69a380fe' => $vendorDir . '/filament/filament/src/global_helpers.php',
     'ebb446bb6d02e998480945fbbb73dc64' => $vendorDir . '/filament/filament/src/helpers.php',
     '7b11c4dc42b3b3023073cb14e519683c' => $vendorDir . '/ralouphie/getallheaders/src/getallheaders.php',

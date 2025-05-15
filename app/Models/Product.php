@@ -31,9 +31,13 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class, 'product_categories_id');
     }
-    public function barangMasuks()
+    public function supplyIns()
     {
-        return $this->hasMany(BarangMasuk::class);
+        return $this->hasMany(SupplyIn::class);
+    }
+    public function barcodes()
+    {
+        return $this->hasMany(\App\Models\SupplyInBarcode::class);
     }
 
 }

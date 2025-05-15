@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SendMailController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,7 @@ Route::get('/', function (){
     return to_route('filament.admin.auth.login');
 })->name('login');
 
+Route::get('/supply-in/{id}/barcodes/pdf', [\App\Http\Controllers\SupplyInBarcodeController::class, 'exportPdf'])
+    ->name('supply-in.barcodes.pdf');
+
+Route::get('/report/export', [\App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
