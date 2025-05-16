@@ -20,21 +20,25 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
              <?php $__env->slot('header', null, []); ?> Stok Produk <?php $__env->endSlot(); ?>
-            <div class="h-72" x-data="{
-                chart: null,
-                init() {
-                    const data = <?php echo \Illuminate\Support\Js::from($data['stok'])->toHtml() ?>;
-                    this.chart = echarts.init(this.$el);
-                    this.chart.setOption({
-                        tooltip: { trigger: 'item' },
-                        series: [{
-                            type: 'pie',
-                            radius: '60%',
-                            data: data,
-                        }]
-                    });
-                }
-            }"></div>
+            <div
+                class="h-72"
+                x-data
+                x-init="
+                    () => {
+                        const el = $el;
+                        const data = <?php echo \Illuminate\Support\Js::from($data['stok'])->toHtml() ?>;
+                        const chart = echarts.init(el);
+                        chart.setOption({
+                            tooltip: { trigger: 'item' },
+                            series: [{
+                                type: 'pie',
+                                radius: '60%',
+                                data: data,
+                            }]
+                        });
+                    }
+                "
+            ></div>
          <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9b945b32438afb742355861768089b04)): ?>
@@ -57,21 +61,25 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
              <?php $__env->slot('header', null, []); ?> Produk Rusak <?php $__env->endSlot(); ?>
-            <div class="h-72" x-data="{
-                chart: null,
-                init() {
-                    const data = <?php echo \Illuminate\Support\Js::from($data['rusak'])->toHtml() ?>;
-                    this.chart = echarts.init(this.$el);
-                    this.chart.setOption({
-                        tooltip: { trigger: 'item' },
-                        series: [{
-                            type: 'pie',
-                            radius: '60%',
-                            data: data,
-                        }]
-                    });
-                }
-            }"></div>
+            <div
+                class="h-72"
+                x-data
+                x-init="
+                    () => {
+                        const el = $el;
+                        const data = <?php echo \Illuminate\Support\Js::from($data['rusak'])->toHtml() ?>;
+                        const chart = echarts.init(el);
+                        chart.setOption({
+                            tooltip: { trigger: 'item' },
+                            series: [{
+                                type: 'pie',
+                                radius: '60%',
+                                data: data,
+                            }]
+                        });
+                    }
+                "
+            ></div>
          <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9b945b32438afb742355861768089b04)): ?>
@@ -84,18 +92,22 @@
 <?php endif; ?>
     </div>
 
-    <div class="mt-6">
+    <div class="mt-6 flex flex-wrap gap-2">
         <a
             href="<?php echo e(route('report.export')); ?>"
             class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition"
         >
-            📁 Export Laporan Excel
+            📁 Export Laporan Produk
+        </a>
+        <a href="<?php echo e(route('orders.report.export', 'month')); ?>" class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
+            🗓️ Export Bulan Ini
+        </a>
+        <a href="<?php echo e(route('orders.report.export')); ?>" class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
+            📁 Export Semua
         </a>
     </div>
 
-    <!--  -->
      <?php $__env->slot('scripts', null, []); ?> 
-        <!--  -->
         <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
      <?php $__env->endSlot(); ?>
  <?php echo $__env->renderComponent(); ?>
