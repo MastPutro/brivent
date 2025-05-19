@@ -20,6 +20,7 @@ use Filament\Tables\Actions\ForceDeleteAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Model;
 
 class SupplyInResource extends Resource
 {
@@ -32,49 +33,49 @@ class SupplyInResource extends Resource
     {
         return $form
             ->schema([
-            Select::make('product_id')
-                ->label('Product')
-                ->relationship('product', 'name')
-                ->searchable()
-                ->preload()
-                ->required(),
+                Select::make('product_id')
+                    ->label('Product')
+                    ->relationship('product', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
 
-            Forms\Components\TextInput::make('quantity')
-                ->numeric()
-                ->required()
-                ->reactive(), // ← penting agar bisa trigger perhitungan
+                Forms\Components\TextInput::make('quantity')
+                    ->numeric()
+                    ->required()
+                    ->reactive(),
 
-            Forms\Components\TextInput::make('price')
-                ->label('Harga per Pcs')
-                ->numeric()
-                ->required()
-                ->prefix('XFA')
-                ->reactive()
-                ->debounce(500)
-                ->afterStateUpdated(function (\Filament\Forms\Set $set, $state, $get) {
-                    $quantity = $get('quantity');
-                    if ($quantity > 0) {
-                        $set('total_price', $state * $quantity);
-                    } else {
-                        $set('total_price', null);
-                    }
-                }),
+                Forms\Components\TextInput::make('price')
+                    ->label('Harga per Pcs')
+                    ->numeric()
+                    ->required()
+                    ->prefix('XFA')
+                    ->reactive()
+                    ->debounce(500)
+                    ->afterStateUpdated(function (\Filament\Forms\Set $set, $state, $get) {
+                        $quantity = $get('quantity');
+                        if ($quantity > 0) {
+                            $set('total_price', $state * $quantity);
+                        } else {
+                            $set('total_price', null);
+                        }
+                    }),
 
-            Forms\Components\TextInput::make('total_price')
-                ->label('Total Harga')
-                ->numeric()
-                ->prefix('XFA')
-                ->reactive()
-                ->debounce(500)
-                ->afterStateUpdated(function (\Filament\Forms\Set $set, $state, $get) {
-                    $quantity = $get('quantity');
-                    if ($quantity > 0) {
-                        $set('price', $state / $quantity);
-                    } else {
-                        $set('price', null);
-                    }
-                }),
-        ]);
+                Forms\Components\TextInput::make('total_price')
+                    ->label('Total Harga')
+                    ->numeric()
+                    ->prefix('XFA')
+                    ->reactive()
+                    ->debounce(500)
+                    ->afterStateUpdated(function (\Filament\Forms\Set $set, $state, $get) {
+                        $quantity = $get('quantity');
+                        if ($quantity > 0) {
+                            $set('price', $state / $quantity);
+                        } else {
+                            $set('price', null);
+                        }
+                    }),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -115,7 +116,7 @@ class SupplyInResource extends Resource
                             ->when($data['until'], fn ($q, $date) => $q->whereDate('created_at', '<=', $date));
                     }),
 
-                TrashedFilter::make(), // << Tambahkan filter ini
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -152,5 +153,35 @@ class SupplyInResource extends Resource
             'create' => Pages\CreateSupplyIn::route('/create'),
             'edit' => Pages\EditSupplyIn::route('/{record}/edit'),
         ];
+    }
+
+    // --- GLOBAL SEARCH ---
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'product.name',
+            'quantity',
+            'price',
+        ];
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->product?->name ?? 'Unnamed Product';
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Qty' => $record->quantity,
+            'Harga per Pcs' => $record->price,
+            'Total' => $record->total_price,
+        ];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return static::getUrl('edit', ['record' => $record]);
     }
 }

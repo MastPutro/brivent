@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DamagedProductResource\Pages;
-use App\Filament\Resources\DamagedProductResource\RelationManagers;
 use App\Models\DamagedProduct;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,10 +11,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\Filter;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
 
 class DamagedProductResource extends Resource
 {
@@ -85,9 +85,10 @@ class DamagedProductResource extends Resource
                     ->queries(
                         true: fn ($query) => $query->where('reason', 'Otomatis karena pesanan'),
                         false: fn ($query) => $query->where('reason', '!=', 'Otomatis karena pesanan'),
-                        blank: fn ($query) => $query, // tanpa filter
+                        blank: fn ($query) => $query,
                     )
                     ->default(false),
+
                 Filter::make('custom_date_range')
                     ->label('Rentang Tanggal')
                     ->form([
@@ -113,11 +114,8 @@ class DamagedProductResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
-
 
     public static function getPages(): array
     {
@@ -126,5 +124,33 @@ class DamagedProductResource extends Resource
             'create' => Pages\CreateDamagedProduct::route('/create'),
             'edit' => Pages\EditDamagedProduct::route('/{record}/edit'),
         ];
+    }
+
+    // ✅ GLOBAL SEARCH CONFIGURATION
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['reason', 'notes', 'barcode.code'];
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return "Barcode: " . $record->barcode?->code . " | Penyebab: " . $record->reason;
+    }
+
+    
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Tanggal Rusak' => $record->damaged_at
+                ? Carbon::parse($record->damaged_at)->format('d M Y')
+                : '-',
+            'Catatan' => str($record->notes)->limit(30),
+        ];
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return true;
     }
 }
