@@ -4,6 +4,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\DamagedProduct;
 use App\Mail\LowStockAlert;
 use Illuminate\Support\Facades\Mail;
 use Filament\Notifications\Notification;
@@ -71,6 +72,30 @@ class CreateOrder extends CreateRecord
     protected function afterCreate(): void
     {
         $lowStockProducts = Product::where('quantity', '<=', 10)->get(['name', 'quantity']);
+
+        // Ambil relasi orderProducts dari Order yang baru dibuat
+        $order = $this->record;
+        foreach ($order->orderProducts as $orderProduct) {
+            $product = $orderProduct->product;
+            if (!$product) continue;
+
+            // Ambil barcode-barcode yang belum rusak
+            $barcodes = $product->barcodes()->whereDoesntHave('damaged')->take($orderProduct->quantity)->get();
+
+            // Cek jika stok barcode rusak tidak cukup
+            if ($barcodes->count() < $orderProduct->quantity) {
+                throw new \Exception("Stok barcode tidak cukup untuk mencatat produk rusak.");
+            }
+
+            foreach ($barcodes as $barcode) {
+                DamagedProduct::create([
+                    'supply_in_barcode_id' => $barcode->id,
+                    'damaged_at' => now(),
+                    'reason' => 'Otomatis karena pesanan',
+                    'notes' => 'Dicatat rusak dari order #' . $order->id,
+                ]);
+            }
+        }
 
         if ($lowStockProducts->isNotEmpty()) {
             $adminUser = User::find(1, ['name', 'email']);

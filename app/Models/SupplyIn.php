@@ -25,6 +25,8 @@ class SupplyIn extends Model
         static::deleted(fn($supplyIn) => $supplyIn->updateProductAverage());
     }
 
+    
+
     public function updateProductAverage()
     {
         $product = $this->product;
@@ -54,4 +56,5 @@ class SupplyIn extends Model
     {
         return $this->hasMany(\App\Models\SupplyInBarcode::class);
     }
+    
 }

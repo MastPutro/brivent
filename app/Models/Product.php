@@ -20,16 +20,17 @@ class Product extends Model
         'quantity',
         'product_categories_id',
         'product_suppliers_id',
+        'create_at',
     ];
 
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(ProductSupplier::class, 'product_suppliers_id');
+        return $this->belongsTo(\App\Models\ProductSupplier::class, 'product_suppliers_id');
     }
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(ProductCategory::class, 'product_categories_id');
+        return $this->belongsTo(\App\Models\ProductCategory::class, 'product_categories_id');
     }
     public function supplyIns()
     {

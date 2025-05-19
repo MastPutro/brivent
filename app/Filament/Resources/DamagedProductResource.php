@@ -11,7 +11,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Validation\Rule;
 
 class DamagedProductResource extends Resource
@@ -67,14 +70,35 @@ class DamagedProductResource extends Resource
                     ->date(),
 
                 Tables\Columns\TextColumn::make('reason')
-                    ->label('Penyebab'),
+                    ->label('Penyebab')
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('notes')
                     ->label('Catatan')
-                    ->limit(30),
+                    ->limit(30)
+                    ->searchable(),
             ])
             ->filters([
-                //
+                TernaryFilter::make('reason_is_auto_order')
+                    ->label('Tampilkan kerusakan karena pesanan')
+                    ->nullable()
+                    ->queries(
+                        true: fn ($query) => $query->where('reason', 'Otomatis karena pesanan'),
+                        false: fn ($query) => $query->where('reason', '!=', 'Otomatis karena pesanan'),
+                        blank: fn ($query) => $query, // tanpa filter
+                    )
+                    ->default(false),
+                Filter::make('custom_date_range')
+                    ->label('Rentang Tanggal')
+                    ->form([
+                        DatePicker::make('from')->label('Dari'),
+                        DatePicker::make('until')->label('Sampai'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['from'], fn ($q, $date) => $q->whereDate('damaged_at', '>=', $date))
+                            ->when($data['until'], fn ($q, $date) => $q->whereDate('damaged_at', '<=', $date));
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -93,6 +117,7 @@ class DamagedProductResource extends Resource
             //
         ];
     }
+
 
     public static function getPages(): array
     {

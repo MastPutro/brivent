@@ -232,6 +232,8 @@ class ComposerStaticInitf41c38d0ecf23df1ec20e52994de0ac2
             'Composer\\Semver\\' => 16,
             'Composer\\Pcre\\' => 14,
             'Complex\\' => 8,
+            'Codeat3\\BladeSolarIcons\\' => 24,
+            'Codeat3\\BladeIconpark\\' => 22,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
@@ -765,6 +767,14 @@ class ComposerStaticInitf41c38d0ecf23df1ec20e52994de0ac2
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
         ),
+        'Codeat3\\BladeSolarIcons\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codeat3/blade-solar-icons/src',
+        ),
+        'Codeat3\\BladeIconpark\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codeat3/blade-iconpark/src',
+        ),
         'Carbon\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -831,6 +841,9 @@ class ComposerStaticInitf41c38d0ecf23df1ec20e52994de0ac2
         'AnourValar\\EloquentSerialize\\Service' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Service.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\OrderProfitExport' => __DIR__ . '/../..' . '/app/Exports/OrderProfitExport.php',
+        'App\\Exports\\ReportExport' => __DIR__ . '/../..' . '/app/Exports/ReportExport.php',
+        'App\\Filament\\Pages\\Report' => __DIR__ . '/../..' . '/app/Filament/Pages/Report.php',
         'App\\Filament\\Resources\\BarangMasukResource\\Pages\\CreateBarangMasuk' => __DIR__ . '/../..' . '/app/Filament/Resources/BarangMasukResource/Pages/CreateBarangMasuk.php',
         'App\\Filament\\Resources\\BarangMasukResource\\Pages\\EditBarangMasuk' => __DIR__ . '/../..' . '/app/Filament/Resources/BarangMasukResource/Pages/EditBarangMasuk.php',
         'App\\Filament\\Resources\\BarangMasukResource\\Pages\\ListBarangMasuks' => __DIR__ . '/../..' . '/app/Filament/Resources/BarangMasukResource/Pages/ListBarangMasuks.php',
@@ -874,11 +887,15 @@ class ComposerStaticInitf41c38d0ecf23df1ec20e52994de0ac2
         'App\\Filament\\Resources\\UserResource\\Pages\\ListUsers' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/Pages/ListUsers.php',
         'App\\Filament\\Resources\\UserResource\\Pages\\ViewUser' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/Pages/ViewUser.php',
         'App\\Filament\\Resources\\UserResource\\Widgets\\UserOverview' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/Widgets/UserOverview.php',
+        'App\\Filament\\Widgets\\LowStockProducts' => __DIR__ . '/../..' . '/app/Filament/Widgets/LowStockProducts.php',
+        'App\\Filament\\Widgets\\ProductPieChart' => __DIR__ . '/../..' . '/app/Filament/Widgets/ProductPieChart.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
+        'App\\Http\\Controllers\\OrderReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderReportController.php',
         'App\\Http\\Controllers\\ProductCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductCategoryController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Controllers\\ProductSupplierController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductSupplierController.php',
+        'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
         'App\\Http\\Controllers\\SendLowStockEmailAlertController' => __DIR__ . '/../..' . '/app/Http/Controllers/SendLowStockEmailAlertController.php',
         'App\\Http\\Controllers\\SupplyInBarcodeController' => __DIR__ . '/../..' . '/app/Http/Controllers/SupplyInBarcodeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -1076,6 +1093,8 @@ class ComposerStaticInitf41c38d0ecf23df1ec20e52994de0ac2
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Carbon\\TranslatorImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorImmutable.php',
         'Carbon\\TranslatorStrongTypeInterface' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorStrongTypeInterface.php',
+        'Codeat3\\BladeIconpark\\BladeIconparkServiceProvider' => __DIR__ . '/..' . '/codeat3/blade-iconpark/src/BladeIconparkServiceProvider.php',
+        'Codeat3\\BladeSolarIcons\\BladeSolarIconsServiceProvider' => __DIR__ . '/..' . '/codeat3/blade-solar-icons/src/BladeSolarIconsServiceProvider.php',
         'Complex\\Complex' => __DIR__ . '/..' . '/markbaker/complex/classes/src/Complex.php',
         'Complex\\Exception' => __DIR__ . '/..' . '/markbaker/complex/classes/src/Exception.php',
         'Complex\\Functions' => __DIR__ . '/..' . '/markbaker/complex/classes/src/Functions.php',

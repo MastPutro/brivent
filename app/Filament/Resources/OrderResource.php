@@ -118,15 +118,19 @@ class OrderResource extends Resource
                     ->description('Total to pay')
                     ->collapsible()
                     ->schema([
-                        TextInput::make('total')
+                        TextInput::make('net')
                             ->prefix('XFA')
-                            ->required()
                             ->numeric()
                             ->readOnly()
                             // This enables us to display the subtotal on the edit page load
                             ->afterStateHydrated(function (Get $get, Set $set) {
                                 self::updateTotals($get, $set);
                             }),
+                        TextInput::make('total')
+                            ->prefix('XFA')
+                            ->required()
+                            ->numeric()
+                            
                     ]),
                 Section::make('Delivered')
                     ->description('The client had paid and got his products')
@@ -156,6 +160,9 @@ class OrderResource extends Resource
                 TextColumn::make('total')
                     ->money('XFA')
                     ->sortable(),
+                TextColumn::make('net')
+                    ->money('XFA')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -169,6 +176,9 @@ class OrderResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('total')
+                    ->money('XFA')
+                    ->summarize(Sum::make()),
+                TextColumn::make('net')
                     ->money('XFA')
                     ->summarize(Sum::make()),
                 ToggleColumn::make('delivered'),
@@ -220,6 +230,7 @@ class OrderResource extends Resource
             'client_phone',
             'client_address',
             'total',
+            'net',
         ];
     }
 
@@ -229,6 +240,7 @@ class OrderResource extends Resource
             'Phone' => $record->client_phone,
             'Address' => $record->client_address,
             'Total' => $record->total,
+            'Net' => $record->net,
             'Delivered' => $record->delivered ? 'Yes' : 'No',
         ];
     }
@@ -281,7 +293,7 @@ class OrderResource extends Resource
 
         // Update the state with the new values
         // $set('subtotal', number_format($subtotal, 2, '.', ''));
-        $set('total', number_format($subtotal, 2, '.', ''));
+        $set('net', number_format($subtotal, 2, '.', ''));
         // $set('total', number_format($subtotal + ($subtotal * ($get('taxes') / 100)), 2, '.', ''));
     }
 }

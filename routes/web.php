@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\OrderReportController;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,12 @@ Route::get('/', function (){
 Route::get('/supply-in/{id}/barcodes/pdf', [\App\Http\Controllers\SupplyInBarcodeController::class, 'exportPdf'])
     ->name('supply-in.barcodes.pdf');
 
-Route::get('/report/export', [\App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
+Route::get('/export', [\App\Http\Controllers\ExportController::class, 'export'])->name('export.data');
 
 
-Route::get('/report/orders/export/{scope?}', [OrderReportController::class, 'export'])
-    ->name('orders.report.export');
+
+// Route::get('/report/export', [\App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
+
+
+// Route::get('/report/orders/export/{scope?}', [OrderReportController::class, 'export'])
+//     ->name('orders.report.export');

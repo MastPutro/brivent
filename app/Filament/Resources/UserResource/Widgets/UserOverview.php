@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\DamagedProduct;
 use Illuminate\Support\Str;
 use App\Models\ProductCategory;
 use App\Models\ProductSupplier;
@@ -20,6 +21,14 @@ class UserOverview extends BaseWidget
         $year = Carbon::now()->year;
         //variable to store each order count as array.
         $new_orders_count = [];
+        // Ambil jumlah total dari semua order
+        $total = Order::sum('total');
+        // Ambil jumlah net dari semua order
+        $net = Order::sum('net');
+
+        $filteredDamagedCount = DamagedProduct::where('reason', '!=', 'Otomatis karena pesanan')->count();
+
+        $lowestStock = Product::where('quantity', '<=', 10)->count();
         //Looping through the month array to get count for each month in the provided year
         for ($i = 1; $i <= 12; $i++) {
             $new_orders_count[] = Order::whereYear('updated_at', $year)
@@ -50,11 +59,24 @@ class UserOverview extends BaseWidget
                 ->color('primary')
                 ->chart($new_orders_count)
                 ->chartColor('success'),
-            Stat::make('Lowest Stock', Product::where('quantity', '<=', 10)->count())
+            Stat::make('Lowest Stock', $lowestStock)
                 ->description('Total of products with low stock')
                 ->icon('heroicon-m-exclamation-triangle')
                 ->color('danger')
                 ->chartColor('danger'),
+            Stat::make(Str::plural('Damaged Product', $filteredDamagedCount),$filteredDamagedCount)
+                ->description('Total of products with defect')
+                ->icon('solar-folder-error-bold')
+                ->color('danger')
+                ->chartColor('danger'),
+            Stat::make(Str::plural('Earning', $total), $total)
+                ->description('Total of earnings')
+                ->icon('heroicon-s-currency-dollar')
+                ->color('primary'),
+            Stat::make(Str::plural('Capital', $net), $net)
+                ->description('Total of fund')
+                ->icon('iconpark-funds-o')
+                ->color('primary'),
         ];
     }
 }

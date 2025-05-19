@@ -115,9 +115,6 @@ class SupplyInResource extends Resource
                             ->when($data['until'], fn ($q, $date) => $q->whereDate('created_at', '<=', $date));
                     }),
 
-                DateScopeFilter::make('created_at')
-                    ->label('Waktu Masuk'),
-
                 TrashedFilter::make(), // << Tambahkan filter ini
             ])
             ->actions([
