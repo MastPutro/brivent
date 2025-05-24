@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        COMPOSE_CMD = "docker-compose -f docker-compose.yml"
+        COMPOSE_CMD = "docker compose -f docker-compose.yml build --no-cache"
     }
 
     stages {
