@@ -96,7 +96,7 @@ class OrderResource extends Resource
                                     ->minValue(1),
                                 TextInput::make('price')
                                     ->numeric()
-                                    ->prefix('XFA')
+                                    ->prefix('IDR')
                                     ->readOnly()
                                     ->required(),
                             ])
@@ -119,7 +119,7 @@ class OrderResource extends Resource
                     ->collapsible()
                     ->schema([
                         TextInput::make('net')
-                            ->prefix('XFA')
+                            ->prefix('IDR')
                             ->numeric()
                             ->readOnly()
                             // This enables us to display the subtotal on the edit page load
@@ -127,7 +127,7 @@ class OrderResource extends Resource
                                 self::updateTotals($get, $set);
                             }),
                         TextInput::make('total')
-                            ->prefix('XFA')
+                            ->prefix('IDR')
                             ->required()
                             ->numeric()
                             
@@ -158,10 +158,10 @@ class OrderResource extends Resource
                     ->limit(20)
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('total')
-                    ->money('XFA')
+                    ->money('IDR')
                     ->sortable(),
                 TextColumn::make('net')
-                    ->money('XFA')
+                    ->money('IDR')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -176,10 +176,10 @@ class OrderResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('total')
-                    ->money('XFA')
+                    ->money('IDR')
                     ->summarize(Sum::make()),
                 TextColumn::make('net')
-                    ->money('XFA')
+                    ->money('IDR')
                     ->summarize(Sum::make()),
                 ToggleColumn::make('delivered'),
             ])

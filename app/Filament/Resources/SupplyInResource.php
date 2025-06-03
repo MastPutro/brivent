@@ -49,7 +49,7 @@ class SupplyInResource extends Resource
                     ->label('Harga per Pcs')
                     ->numeric()
                     ->required()
-                    ->prefix('XFA')
+                    ->prefix('IDR')
                     ->reactive()
                     ->debounce(500)
                     ->afterStateUpdated(function (\Filament\Forms\Set $set, $state, $get) {
@@ -64,7 +64,7 @@ class SupplyInResource extends Resource
                 Forms\Components\TextInput::make('total_price')
                     ->label('Total Harga')
                     ->numeric()
-                    ->prefix('XFA')
+                    ->prefix('IDR')
                     ->reactive()
                     ->debounce(500)
                     ->afterStateUpdated(function (\Filament\Forms\Set $set, $state, $get) {
@@ -94,7 +94,7 @@ class SupplyInResource extends Resource
 
                 Tables\Columns\TextColumn::make('price')
                     ->label('Harga/unit')
-                    ->money('XFA')
+                    ->money('IDR')
                     ->searchable()
                     ->sortable(),
 

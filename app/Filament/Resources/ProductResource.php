@@ -53,11 +53,11 @@ class ProductResource extends Resource
                 Section::make('Product')
                     ->description('Product details')
                     ->schema([
-                        FileUpload::make('image')
-                            ->image()
-                            ->columnSpanFull()
-                            ->imageEditor()
-                            ->required(),
+                        // FileUpload::make('image')
+                        //     ->image()
+                        //     ->columnSpanFull()
+                        //     ->imageEditor()
+                        //     ->required(),
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255)
@@ -77,7 +77,7 @@ class ProductResource extends Resource
                             ->required()
                             ->numeric()
                             ->default(0)
-                            ->prefix('XFA')
+                            ->prefix('IDR')
                             ->readOnly(),
                         TextInput::make('quantity')
                             ->required()
@@ -94,12 +94,12 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->square(),
+                // Tables\Columns\ImageColumn::make('image')
+                //     ->square(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money('XFA')
+                    ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
@@ -135,7 +135,7 @@ class ProductResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 DeleteAction::make(),
             ])

@@ -36,11 +36,24 @@ class DamagedProductResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required()
-                    ->hint(fn ($state) => \App\Models\SupplyInBarcode::find($state)?->damaged ? '⚠️ Barcode ini sudah rusak' : null)
-                    ->disableOptionWhen(fn ($value) => \App\Models\SupplyInBarcode::find($value)?->damaged)
+                    ->hint(function ($state, $operation, ?Model $record) {
+                        if ($operation === 'edit') {
+                            return null; // Tidak tampilkan peringatan saat edit
+                        }
+                        return \App\Models\SupplyInBarcode::find($state)?->damaged 
+                            ? '⚠️ Barcode ini sudah rusak' 
+                            : null;
+                    })
+                    ->disableOptionWhen(function ($value, $operation, ?Model $record) {
+                        if ($operation === 'edit') {
+                            return false; // Tidak disable saat edit
+                        }
+                        return \App\Models\SupplyInBarcode::find($value)?->damaged;
+                    })
                     ->helperText('Pilih barcode unit yang rusak. Barcode yang sudah rusak tidak dapat dipilih.')
                     ->rules([
-                        Rule::unique('damaged_products', 'supply_in_barcode_id'),
+                        Rule::unique('damaged_products', 'supply_in_barcode_id')
+                            ->ignore($form->getRecord()), // Ignore current record saat edit
                     ]),
 
                 Forms\Components\DatePicker::make('damaged_at')
