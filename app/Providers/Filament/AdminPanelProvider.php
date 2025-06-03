@@ -71,7 +71,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             // ->brandLogo(asset('images/brivent.png'))
-            ->brandName('Brivent')
+            ->brandName('Kampus 4')
             ->favicon(asset(asset('images/brivent.png')))
             ->spa();
     }
