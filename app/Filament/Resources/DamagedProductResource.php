@@ -31,7 +31,7 @@ class DamagedProductResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('supply_in_barcode_id')
-                    ->label('Barcode')
+                    ->label('Barcode-code')
                     ->relationship('barcode', 'code')
                     ->searchable()
                     ->preload()
